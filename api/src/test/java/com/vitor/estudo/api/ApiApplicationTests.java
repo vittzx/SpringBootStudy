@@ -1,10 +1,10 @@
-package com.vitor.apiEstudo.vittzx;
+package com.vitor.estudo.api;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class VittzxApplicationTests {
+class ApiApplicationTests {
 
 	@Test
 	void contextLoads() {
