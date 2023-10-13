@@ -1,6 +1,7 @@
 package com.vitor.estudo.api.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,7 @@ public class MedicoController{
     private MedicoRepository repository;
 
     @PostMapping
+    @Transactional // quando o metodo eh POST, inserir, INSERT precisa colocar o transactional pois eh metodo de escrita 
     public void cadastrar(@RequestBody DadosCadastroMedico dados){
         // lembrar sempre de colocar o requestBody antes de enviar uma requisicao no Spring Boot.
         repository.save(new Medico(dados));
