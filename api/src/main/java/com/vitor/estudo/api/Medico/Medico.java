@@ -28,7 +28,7 @@ public class Medico {
     
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO) // incrementa o valor 
+    @GeneratedValue(strategy=GenerationType.IDENTITY) // incrementa o valor 
     private Long id;
 
     private String nome;
