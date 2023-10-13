@@ -10,6 +10,8 @@ import com.vitor.estudo.api.Medico.DadosCadastroMedico;
 import com.vitor.estudo.api.Medico.Medico;
 import com.vitor.estudo.api.Repository.MedicoRepository;
 
+import jakarta.validation.Valid;
+
 
 @RestController
 @RequestMapping("medicos")
@@ -20,7 +22,7 @@ public class MedicoController{
 
     @PostMapping
     @Transactional // quando o metodo eh POST, inserir, INSERT precisa colocar o transactional pois eh metodo de escrita 
-    public void cadastrar(@RequestBody DadosCadastroMedico dados){
+    public void cadastrar(@RequestBody @Valid DadosCadastroMedico dados){
         // lembrar sempre de colocar o requestBody antes de enviar uma requisicao no Spring Boot.
         repository.save(new Medico(dados));
     }
