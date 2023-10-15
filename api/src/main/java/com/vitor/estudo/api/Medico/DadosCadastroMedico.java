@@ -9,7 +9,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 public record DadosCadastroMedico(
-    @NotBlank // nao eh nulo nem vazio, faz essa validacao
+    @NotBlank    // nao eh nulo nem vazio, faz essa validacao
     String nome, 
     
     @NotBlank
