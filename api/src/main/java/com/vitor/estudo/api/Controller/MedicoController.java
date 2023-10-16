@@ -8,9 +8,12 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.vitor.estudo.api.Medico.DadosAtualizacaoMedico;
 import com.vitor.estudo.api.Medico.DadosCadastroMedico;
 import com.vitor.estudo.api.Medico.DadosListagemMedico;
 import com.vitor.estudo.api.Medico.Medico;
@@ -44,5 +47,13 @@ public class MedicoController{
         // o Parametro medico fica 'escondido'.
         // ai no final convertemos para list. 
     } 
+
+
+    @PutMapping // atualiando 
+    @Transactional
+    public void atualizar(@RequestBody @Valid DadosAtualizacaoMedico dados){
+        var medico = repository.getReferenceById(dados.id()); // carregar o medico pelo id
+        medico.atualizarInformacoes(dados);
+    }
 
 }
