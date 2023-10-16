@@ -3,6 +3,8 @@ package com.vitor.estudo.api.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,8 +35,10 @@ public class MedicoController{
 
 
     @GetMapping
-    public List<DadosListagemMedico> listar(){
-        return repository.findAll().stream().map(DadosListagemMedico::new).toList();
+    public List<DadosListagemMedico> listar(@PageableDefault(size =10, sort={"nome"})Pageable paginacao){
+        return repository.findAll(paginacao).map(DadosListagemMedico::new).toList();
+
+        // return repository.findAll().stream().map(DadosListagemMedico::new).toList();
         // no retorno do repository.findAll, ele retorna do banco de dados uma lista de Objeto Medico
         // por isso  tem que colocar o Stream e fazer o map DadosListagemMedico para cada um item da lista, como parametro imbutido o Medico.
         // o Parametro medico fica 'escondido'.
