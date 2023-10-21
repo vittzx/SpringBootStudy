@@ -1,6 +1,8 @@
 package com.vitor.estudo.api.Medico;
 
 import com.vitor.estudo.api.Endereco.Endereco;
+import com.vitor.estudo.api.Medico.DTO.DadosAtualizacaoMedico;
+import com.vitor.estudo.api.Medico.DTO.DadosCadastroMedico;
 
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;

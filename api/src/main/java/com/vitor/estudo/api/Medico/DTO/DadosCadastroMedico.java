@@ -1,6 +1,7 @@
-package com.vitor.estudo.api.Medico;
+package com.vitor.estudo.api.Medico.DTO;
 
 import com.vitor.estudo.api.Endereco.DadosEndereco;
+import com.vitor.estudo.api.Medico.Especialidade;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,10 +16,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.vitor.estudo.api.Medico.DadosAtualizacaoMedico;
-import com.vitor.estudo.api.Medico.DadosCadastroMedico;
-import com.vitor.estudo.api.Medico.DadosListagemMedico;
 import com.vitor.estudo.api.Medico.Medico;
+import com.vitor.estudo.api.Medico.DTO.DadosAtualizacaoMedico;
+import com.vitor.estudo.api.Medico.DTO.DadosCadastroMedico;
+import com.vitor.estudo.api.Medico.DTO.DadosDetalhamentoMedico;
+import com.vitor.estudo.api.Medico.DTO.DadosListagemMedico;
 import com.vitor.estudo.api.Repository.MedicoRepository;
 
 import jakarta.validation.Valid;
@@ -40,8 +42,9 @@ public class MedicoController{
 
 
     @GetMapping
-    public List<DadosListagemMedico> listar(@PageableDefault(size =10, sort={"nome"})Pageable paginacao){
-        return repository.findAllByAtivoTrue(paginacao).map(DadosListagemMedico::new).toList();
+    public ResponseEntity<List<DadosListagemMedico>> listar(@PageableDefault(size =10, sort={"nome"})Pageable paginacao){
+        var page =  repository.findAllByAtivoTrue(paginacao).map(DadosListagemMedico::new).toList(); 
+        return ResponseEntity.ok(page); // retorna o codigo 200
 
         // return repository.findAll().stream().map(DadosListagemMedico::new).toList();
         // no retorno do repository.findAll, ele retorna do banco de dados uma lista de Objeto Medico
@@ -53,9 +56,11 @@ public class MedicoController{
 
     @PutMapping // atualiando 
     @Transactional
-    public void atualizar(@RequestBody @Valid DadosAtualizacaoMedico dados){
+    public ResponseEntity atualizar(@RequestBody @Valid DadosAtualizacaoMedico dados){
         var medico = repository.getReferenceById(dados.id()); // carregar o medico pelo id
         medico.atualizarInformacoes(dados);
+
+        return ResponseEntity.ok(new DadosDetalhamentoMedico(medico)); // nao eh recomendado retornar entidade JPA.
     }
 
     @DeleteMapping("/delete/{id}")
@@ -67,9 +72,11 @@ public class MedicoController{
 
     @DeleteMapping("/logic-delete/{id}")
     @Transactional
-    public void logicDelete(@PathVariable Long id){
+    // Metodo excluir, com boa pratica deve retornar codigo 204 
+    public ResponseEntity logicDelete(@PathVariable Long id){
         var medico = repository.getReferenceById(id); // exlcusao do banco de dados.
         medico.excluirLogico();
+        return ResponseEntity.noContent().build();
     }
 
 }
