@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.vitor.estudo.api.Medico.Medico;
-import com.vitor.estudo.api.Medico.DTO.DadosAtualizacaoMedico;
-import com.vitor.estudo.api.Medico.DTO.DadosCadastroMedico;
-import com.vitor.estudo.api.Medico.DTO.DadosDetalhamentoMedico;
-import com.vitor.estudo.api.Medico.DTO.DadosListagemMedico;
-import com.vitor.estudo.api.Repository.MedicoRepository;
+import com.vitor.estudo.api.Domain.Medico.Medico;
+import com.vitor.estudo.api.Domain.Medico.DTO.DadosAtualizacaoMedico;
+import com.vitor.estudo.api.Domain.Medico.DTO.DadosCadastroMedico;
+import com.vitor.estudo.api.Domain.Medico.DTO.DadosDetalhamentoMedico;
+import com.vitor.estudo.api.Domain.Medico.DTO.DadosListagemMedico;
+import com.vitor.estudo.api.Domain.Medico.Repository.MedicoRepository;
 
 import jakarta.validation.Valid;
 

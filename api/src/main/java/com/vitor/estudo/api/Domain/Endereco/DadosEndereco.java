@@ -1,4 +1,4 @@
-package com.vitor.estudo.api.Endereco;
+package com.vitor.estudo.api.Domain.Endereco;
 
 
 

@@ -1,10 +1,10 @@
-package com.vitor.estudo.api.Repository;
+package com.vitor.estudo.api.Domain.Medico.Repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.vitor.estudo.api.Medico.Medico;
+import com.vitor.estudo.api.Domain.Medico.Medico;
 
 // Repository JPA == DAO
 // JpaRepository<Nome Da Entidade, Tipo do ID>
