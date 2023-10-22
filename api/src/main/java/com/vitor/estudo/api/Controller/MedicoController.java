@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.vitor.estudo.api.Medico.Medico;
 import com.vitor.estudo.api.Medico.DTO.DadosAtualizacaoMedico;
@@ -35,9 +36,14 @@ public class MedicoController{
 
     @PostMapping
     @Transactional // quando o metodo eh POST, inserir, INSERT precisa colocar o transactional pois eh metodo de escrita 
-    public void cadastrar(@RequestBody @Valid DadosCadastroMedico dados){
+    public ResponseEntity cadastrar(@RequestBody @Valid DadosCadastroMedico dados, UriComponentsBuilder uriBuilder){
         // lembrar sempre de colocar o requestBody antes de enviar uma requisicao no Spring Boot.
-        repository.save(new Medico(dados));
+        var medico = new Medico(dados);
+        repository.save(medico);
+
+        // Uri Buildeer para pegar a url (endereco )
+        var uri = uriBuilder.path("/medicos/{id}").buildAndExpand(medico.getId()).toUri();
+        return ResponseEntity.created(uri).body(new DadosDetalhamentoMedico(medico));
     }
 
 
@@ -51,6 +57,12 @@ public class MedicoController{
         // por isso  tem que colocar o Stream e fazer o map DadosListagemMedico para cada um item da lista, como parametro imbutido o Medico.
         // o Parametro medico fica 'escondido'.
         // ai no final convertemos para list. 
+    } 
+
+    @GetMapping("/{id}")
+    public ResponseEntity pegarMedicoId(@PathVariable Long id){
+        Medico medico = repository.getReferenceById(id);
+        return ResponseEntity.ok(new DadosDetalhamentoMedico(medico));
     } 
 
 
