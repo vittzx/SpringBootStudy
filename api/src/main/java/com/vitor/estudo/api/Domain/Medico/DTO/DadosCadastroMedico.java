@@ -14,24 +14,24 @@ public record DadosCadastroMedico(
     @NotBlank(message="{nome.obrigatorio}")
     String nome, 
     
-    // @NotBlank
-    // @Email(message="Campo email é obrigatorio") // validacao de email
-    @NotBlank(message="{email.obrigatorio}")
-    @Email(message="{email.invalido}")
+    @NotBlank
+    @Email(message="Campo email é obrigatorio") // validacao de email
+    // @NotBlank(message="{email.obrigatorio}") por algum caralho nao funcionou
+    // @Email(message="{email.invalido}")
     String email, 
     
-    // @NotBlank(message="Campo CRM é obrigatorio")
-    // @Pattern(regexp = "\\d{4,6}", message="Precisa ser entre 4-6 digitos") // expressao regular \\ d de 4 a 6 digitos 
-    @NotBlank(message="{crm.obrigatorio}")
-    @Pattern(regexp="\\d{4,6}", message="{crm.invalido}")
+    @NotBlank(message="Campo CRM é obrigatorio")
+    @Pattern(regexp = "\\d{4,6}", message="Precisa ser entre 4-6 digitos") // expressao regular \\ d de 4 a 6 digitos 
+    // @NotBlank(message="{crm.obrigatorio}")
+    // @Pattern(regexp="\\d{4,6}", message="{crm.invalido}") por algum caralho nao funcionou
     String crm, 
     
-    // @NotNull(message="Campo especialidade é obrigatório e precisa estar dentro dos padroes.") // nao eh not blank pois nao eh String 
-    @NotNull(message="{especialidade.obrigatorio}")
+    @NotNull(message="Campo especialidade é obrigatório e precisa estar dentro dos padroes.") // nao eh not blank pois nao eh String 
+    // @NotNull(message="{especialidade.obrigatorio}")
     Especialidade especialidade, 
     
-    // @NotNull(message="Campo endereco é obrigatorio")
-    @NotNull(message="{endereco.obrigatorio}")
+    @NotNull(message="Campo endereco é obrigatorio")
+    // @NotNull(message="{endereco.obrigatorio}") por algum caralho nao funcionou
     @Valid
     DadosEndereco endereco) {
     
