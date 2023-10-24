@@ -1,1 +1,1 @@
- 
+Existem palavras reservadas no Spring para que ele faca queries de maneira correta, como findBy e existBy
