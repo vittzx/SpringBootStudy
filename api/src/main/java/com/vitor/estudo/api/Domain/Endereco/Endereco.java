@@ -1,5 +1,7 @@
 package com.vitor.estudo.api.Domain.Endereco;
 
+import com.vitor.estudo.api.Domain.Endereco.DTO.DadosEndereco;
+
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
