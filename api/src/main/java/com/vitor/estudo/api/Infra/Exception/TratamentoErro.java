@@ -1,4 +1,4 @@
-package com.vitor.estudo.api.Infra;
+package com.vitor.estudo.api.Infra.Exception;
 
 
 import java.util.List;
