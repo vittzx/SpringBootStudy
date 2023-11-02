@@ -36,7 +36,7 @@ public class MedicoController{
 
     @PostMapping
     @Transactional // quando o metodo eh POST, inserir, INSERT precisa colocar o transactional pois eh metodo de escrita 
-    public ResponseEntity cadastrar(@RequestBody @Valid DadosCadastroMedico dados, UriComponentsBuilder uriBuilder){
+    public ResponseEntity<DadosDetalhamentoMedico> cadastrar(@RequestBody @Valid DadosCadastroMedico dados, UriComponentsBuilder uriBuilder){
         // lembrar sempre de colocar o requestBody antes de enviar uma requisicao no Spring Boot.
         var medico = new Medico(dados);
         repository.save(medico);
@@ -60,7 +60,7 @@ public class MedicoController{
     } 
 
     @GetMapping("/{id}")
-    public ResponseEntity pegarMedicoId(@PathVariable Long id){
+    public ResponseEntity<DadosDetalhamentoMedico> pegarMedicoId(@PathVariable Long id){
         Medico medico = repository.getReferenceById(id);
         return ResponseEntity.ok(new DadosDetalhamentoMedico(medico));
     } 
@@ -68,7 +68,7 @@ public class MedicoController{
 
     @PutMapping // atualiando 
     @Transactional
-    public ResponseEntity atualizar(@RequestBody @Valid DadosAtualizacaoMedico dados){
+    public ResponseEntity<DadosDetalhamentoMedico> atualizar(@RequestBody @Valid DadosAtualizacaoMedico dados){
         var medico = repository.getReferenceById(dados.id()); // carregar o medico pelo id
         medico.atualizarInformacoes(dados);
 
@@ -85,7 +85,7 @@ public class MedicoController{
     @DeleteMapping("/logic-delete/{id}")
     @Transactional
     // Metodo excluir, com boa pratica deve retornar codigo 204 
-    public ResponseEntity logicDelete(@PathVariable Long id){
+    public ResponseEntity<ResponseEntity.BodyBuilder> logicDelete(@PathVariable Long id){
         var medico = repository.getReferenceById(id); // exlcusao do banco de dados.
         medico.excluirLogico();
         return ResponseEntity.noContent().build();
