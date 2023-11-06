@@ -4,6 +4,7 @@ package com.vitor.estudo.api.Infra.Exception;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.StreamingHttpOutputMessage.Body;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
  */
 
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.HttpClientErrorException.BadRequest;
 
 import com.vitor.estudo.api.Infra.DTO.DadosErroValidacao;
 
