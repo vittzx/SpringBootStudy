@@ -28,7 +28,8 @@ public class TokenService {
                 .withExpiresAt(dataEspiracao())
                 .sign(algorithm);
 
-            return token;
+            return "TOKEN: " + token; // mensagem que retorna ao painel 200 no insmonima ->
+            // TOKEN: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2FvLnBhdWxvQHRlc3QiLCJpc3MiOiJBUEkgRVNUVURPUy5WSVRPUkNPU1NPIiwiaWQiOjEsImV4cCI6MTY5OTMxNzA1Mn0.PhrDUBKiJGVg2bi7YTIdiMarubYxy954IQ2YxtsA_hk
         }catch (JWTCreationException exception){
             throw new RuntimeException("Erro ao gerar Token: ", exception);
         }
