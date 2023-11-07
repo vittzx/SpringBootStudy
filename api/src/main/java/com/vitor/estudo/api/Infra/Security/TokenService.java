@@ -4,8 +4,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
-
-
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.auth0.jwt.JWT;
@@ -15,12 +14,14 @@ import com.vitor.estudo.api.Domain.Usuario.Usuario;
 
 @Service
 public class TokenService {
-    
 
+    @Value("${api.security.token.secret}")
+    private String secret;
+    
     public String createToken(Usuario usuario){
         try {   
             //                                             senha secreta
-            Algorithm algorithm = Algorithm.HMAC256("SENHASECRETA");
+            Algorithm algorithm = Algorithm.HMAC256(secret);
             String token = JWT.create()
                 .withIssuer("API ESTUDOS.VITORCOSSO") // ferramenta que é dona do token (QUAL API)
                 .withSubject(usuario.getLogin()) // retorna o nome/login do usuario
@@ -28,7 +29,7 @@ public class TokenService {
                 .withExpiresAt(dataEspiracao())
                 .sign(algorithm);
 
-            return "TOKEN: " + token; // mensagem que retorna ao painel 200 no insmonima ->
+            return token; // mensagem que retorna ao painel 200 no insmonima ->
             // TOKEN: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2FvLnBhdWxvQHRlc3QiLCJpc3MiOiJBUEkgRVNUVURPUy5WSVRPUkNPU1NPIiwiaWQiOjEsImV4cCI6MTY5OTMxNzA1Mn0.PhrDUBKiJGVg2bi7YTIdiMarubYxy954IQ2YxtsA_hk
         }catch (JWTCreationException exception){
             throw new RuntimeException("Erro ao gerar Token: ", exception);

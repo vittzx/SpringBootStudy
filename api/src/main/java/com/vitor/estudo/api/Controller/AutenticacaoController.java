@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.vitor.estudo.api.Domain.Usuario.Usuario;
 import com.vitor.estudo.api.Domain.Usuario.DTO.DadosAutenticacaoUsuario;
 import com.vitor.estudo.api.Infra.Security.TokenService;
+import com.vitor.estudo.api.Infra.Security.DTO.DadosTokenJWT;
 
 import jakarta.validation.Valid;
 
@@ -27,12 +28,13 @@ public class AutenticacaoController {
     private TokenService tokenService;
 
     @PostMapping
-    public ResponseEntity<String> efetuarLogin(@RequestBody @Valid DadosAutenticacaoUsuario dados){
-        UsernamePasswordAuthenticationToken token  = new UsernamePasswordAuthenticationToken(dados.login(), dados.senha());
-        var authentication = manager.authenticate(token);
-
+    public ResponseEntity<DadosTokenJWT> efetuarLogin(@RequestBody @Valid DadosAutenticacaoUsuario dados){
+        UsernamePasswordAuthenticationToken autorizacaoToken  = new UsernamePasswordAuthenticationToken(dados.login(), dados.senha());
+        var authentication = manager.authenticate(autorizacaoToken);
+        String tokenJWT = tokenService.createToken((Usuario) authentication.getPrincipal());
         // devolver o token
-        return ResponseEntity.ok(tokenService.createToken((Usuario) authentication.getPrincipal()));
+        DadosTokenJWT dadosToken = new DadosTokenJWT(tokenJWT);
+        return ResponseEntity.ok(dadosToken);
     }
     
 }

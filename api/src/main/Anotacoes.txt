@@ -9,3 +9,9 @@ main/.../estudo/infra/security
 The key difference between stateful and stateless applications is that stateless applications don't “store” data whereas stateful applications require backing storage. Stateful applications like the Cassandra, MongoDB and mySQL databases all require some type of persistent storage that will survive service restarts.
 
 -------------------------------------------------------------------------------------------------------------------------
+
+JWT.io -> site para pegar a dependencia de tokens e decodificar tokens
+
+
+
+
