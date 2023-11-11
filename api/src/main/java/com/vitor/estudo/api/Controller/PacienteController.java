@@ -3,7 +3,6 @@ package com.vitor.estudo.api.Controller;
 
 import java.net.URI;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +20,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 
 import com.vitor.estudo.api.Domain.Paciente.Paciente;
+import com.vitor.estudo.api.Domain.Paciente.DTO.DadosAtualizacaoPaciente;
 import com.vitor.estudo.api.Domain.Paciente.DTO.DadosCadastroPaciente;
 import com.vitor.estudo.api.Domain.Paciente.DTO.DadosDetalhamentoPaciente;
 import com.vitor.estudo.api.Domain.Paciente.DTO.DadosListagemPaciente;
@@ -36,7 +36,8 @@ public class PacienteController {
 
     @Autowired
     PacienteRepository repository;
-
+    
+    // GetMethods
 
     @GetMapping("/{id}")
     public ResponseEntity<Paciente> getPacienteId(@PathVariable long id){
@@ -52,6 +53,8 @@ public class PacienteController {
         return ResponseEntity.ok(page);
     }
 
+    // Post Methods
+
     @PostMapping
     @Transactional
     public ResponseEntity<DadosDetalhamentoPaciente> cadastrar(@RequestBody @Valid DadosCadastroPaciente dados, UriComponentsBuilder uriBuilder){
@@ -62,6 +65,7 @@ public class PacienteController {
     }
 
 
+    // Delete Methods
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<ResponseEntity.BodyBuilder> deletarPacienteLogico(@PathVariable Long id){
@@ -70,7 +74,7 @@ public class PacienteController {
         return ResponseEntity.noContent().build();
     }
 
-
+    // Put methods
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<ResponseEntity.BodyBuilder> ativarPacienteLogico(@PathVariable Long id){
@@ -79,5 +83,15 @@ public class PacienteController {
         return ResponseEntity.ok().build();
     }
 
-    
+
+    @PutMapping
+    @Transactional
+    public ResponseEntity<DadosDetalhamentoPaciente> atualizarInformacoes(@RequestBody @Valid DadosAtualizacaoPaciente dados){
+        Paciente paciente = repository.getReferenceById(dados.id());
+        paciente.atualizarInfo(dados);
+        return ResponseEntity.ok(new DadosDetalhamentoPaciente(paciente));
+
+    }
+
+
 }
