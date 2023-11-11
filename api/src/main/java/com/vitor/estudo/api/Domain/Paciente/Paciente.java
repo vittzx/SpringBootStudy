@@ -1,6 +1,7 @@
 package com.vitor.estudo.api.Domain.Paciente;
 
 import com.vitor.estudo.api.Domain.Endereco.Endereco;
+import com.vitor.estudo.api.Domain.Paciente.DTO.DadosCadastroPaciente;
 
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -33,6 +34,14 @@ public class Paciente {
     @Embedded
     private Endereco endereco;
 
-    private Boolean ativio;
+    private Boolean ativo;
+
+    public Paciente(DadosCadastroPaciente dados){
+        this.ativo = true;
+        this.nome = dados.nome();
+        this.email = dados.email();
+        this.cpf = dados.cpf();
+        this.endereco = new Endereco(dados.endereco())  ;
+    }
 
 }
