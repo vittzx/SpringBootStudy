@@ -44,4 +44,13 @@ public class Paciente {
         this.endereco = new Endereco(dados.endereco())  ;
     }
 
+
+    public void excluirLogico(){
+        this.ativo = false;
+    }
+
+
+    public void ativarLogico() {
+        this.ativo = true;
+    }
 }
