@@ -1,5 +1,7 @@
 package com.vitor.estudo.api.Controller;
 
+
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,11 +40,10 @@ public class MedicoController{
     @Transactional // quando o metodo eh POST, inserir, INSERT precisa colocar o transactional pois eh metodo de escrita 
     public ResponseEntity<DadosDetalhamentoMedico> cadastrar(@RequestBody @Valid DadosCadastroMedico dados, UriComponentsBuilder uriBuilder){
         // lembrar sempre de colocar o requestBody antes de enviar uma requisicao no Spring Boot.
-        var medico = new Medico(dados);
+        Medico medico = new Medico(dados);
         repository.save(medico);
-
         // Uri Buildeer para pegar a url (endereco )
-        var uri = uriBuilder.path("/medicos/{id}").buildAndExpand(medico.getId()).toUri();
+        URI uri = uriBuilder.path("/medicos/{id}").buildAndExpand(medico.getId()).toUri();
         return ResponseEntity.created(uri).body(new DadosDetalhamentoMedico(medico));
     }
 
@@ -69,7 +70,7 @@ public class MedicoController{
     @PutMapping // atualiando 
     @Transactional
     public ResponseEntity<DadosDetalhamentoMedico> atualizar(@RequestBody @Valid DadosAtualizacaoMedico dados){
-        var medico = repository.getReferenceById(dados.id()); // carregar o medico pelo id
+        Medico medico = repository.getReferenceById(dados.id()); // carregar o medico pelo id
         medico.atualizarInformacoes(dados);
 
         return ResponseEntity.ok(new DadosDetalhamentoMedico(medico)); // nao eh recomendado retornar entidade JPA.

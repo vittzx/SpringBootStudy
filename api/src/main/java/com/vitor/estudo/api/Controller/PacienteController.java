@@ -40,9 +40,9 @@ public class PacienteController {
     // GetMethods
 
     @GetMapping("/{id}")
-    public ResponseEntity<Paciente> getPacienteId(@PathVariable long id){
+    public ResponseEntity<DadosDetalhamentoPaciente> getPacienteId(@PathVariable long id){
         Paciente paciente = repository.getReferenceById(id);
-        return ResponseEntity.ok(paciente); 
+        return ResponseEntity.ok(new DadosDetalhamentoPaciente(paciente)); 
     }
 
 

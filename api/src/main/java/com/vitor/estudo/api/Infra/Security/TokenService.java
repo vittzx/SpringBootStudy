@@ -20,6 +20,14 @@ public class TokenService {
     @Value("${api.security.token.secret}")
     private String secret;
     
+
+    private String login;
+
+    public String getLogin() {
+        return login;
+    }
+
+
     public String createToken(Usuario usuario){
         try {   
             //                                             senha secreta
@@ -30,6 +38,7 @@ public class TokenService {
                 .withClaim("id", usuario.getId()) // retorna o id 
                 .withExpiresAt(dataEspiracao())
                 .sign(algorithm);
+            login = usuario.getLogin();
 
             return token; // mensagem que retorna ao painel 200 no insmonima ->
             // TOKEN: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2FvLnBhdWxvQHRlc3QiLCJpc3MiOiJBUEkgRVNUVURPUy5WSVRPUkNPU1NPIiwiaWQiOjEsImV4cCI6MTY5OTMxNzA1Mn0.PhrDUBKiJGVg2bi7YTIdiMarubYxy954IQ2YxtsA_hk
