@@ -2,6 +2,9 @@ package com.vitor.estudo.api.Domain.Consultas.DTO;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.vitor.estudo.api.Domain.Medico.Especialidade;
+
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
 
@@ -15,6 +18,10 @@ public record DadosAgendamentoConsulta(
     
     @NotNull
     @Future // significa q a data tem que ser no futuro.
-    LocalDateTime dataConsulta) {
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+    LocalDateTime dataConsulta,
+
+    Especialidade especialidade)
     
+    {
 }

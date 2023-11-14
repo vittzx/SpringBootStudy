@@ -1,5 +1,6 @@
 package com.vitor.estudo.api.Controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.vitor.estudo.api.Domain.Consultas.DTO.DadosAgendamentoConsulta;
 import com.vitor.estudo.api.Domain.Consultas.DTO.DadosDetalhamentoConsulta;
+import com.vitor.estudo.api.Domain.Consultas.Service.AgendaDeConsultas;
 
 import jakarta.validation.Valid;
 
@@ -15,10 +17,21 @@ import jakarta.validation.Valid;
 @RequestMapping("/consultas")
 public class ConsultasController {
     
+
+    @Autowired
+    private AgendaDeConsultas agenda;
+
     @PostMapping
     public ResponseEntity<DadosDetalhamentoConsulta> cadastrarConsulta(@RequestBody @Valid DadosAgendamentoConsulta dados){
         System.out.println(dados);
 
+        // classe controller nao deve ter regras de negocio. so controla o fluxo de execucao.
+        /* Porem
+         * 
+         * Mas é importante ficarmos atentos, pois muitas vezes não é necessário criar um Service e, consequentemente, adicionar mais uma camada e complexidade desnecessária à nossa  aplicação. Uma regra que podemos utilizar é a seguinte: se não houverem regras de negócio, podemos simplesmente realizar a comunicação direta entre os controllers e os repositories da aplicação.
+         * 
+         */
+        agenda.agendar(dados);
 
         return ResponseEntity.ok(new DadosDetalhamentoConsulta(null,null, null ,null));
         
