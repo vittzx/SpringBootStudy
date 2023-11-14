@@ -2,15 +2,19 @@ package com.vitor.estudo.api.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vitor.estudo.api.Domain.Consultas.DTO.DadosAgendamentoConsulta;
+import com.vitor.estudo.api.Domain.Consultas.DTO.DadosCancelamentoConsulta;
 import com.vitor.estudo.api.Domain.Consultas.DTO.DadosDetalhamentoConsulta;
 import com.vitor.estudo.api.Domain.Consultas.Service.AgendaDeConsultas;
 
+
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 @RestController
@@ -22,6 +26,7 @@ public class ConsultasController {
     private AgendaDeConsultas agenda;
 
     @PostMapping
+    @Transactional
     public ResponseEntity<DadosDetalhamentoConsulta> cadastrarConsulta(@RequestBody @Valid DadosAgendamentoConsulta dados){
         System.out.println(dados);
 
@@ -36,4 +41,15 @@ public class ConsultasController {
         return ResponseEntity.ok(new DadosDetalhamentoConsulta(null,null, null ,null));
         
     }
+
+
+    @DeleteMapping
+    @Transactional
+    public ResponseEntity<ResponseEntity.BodyBuilder> cancelarConsulta(@RequestBody @Valid DadosCancelamentoConsulta dados){
+        agenda.cancelar(dados);
+        return ResponseEntity.noContent().build();
+    }
+
+
+
 }

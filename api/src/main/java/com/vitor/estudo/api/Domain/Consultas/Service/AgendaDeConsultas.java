@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.vitor.estudo.api.Domain.Consultas.Consulta;
 import com.vitor.estudo.api.Domain.Consultas.DTO.DadosAgendamentoConsulta;
+import com.vitor.estudo.api.Domain.Consultas.DTO.DadosCancelamentoConsulta;
 import com.vitor.estudo.api.Domain.Consultas.Repository.ConsultasRepository;
 import com.vitor.estudo.api.Domain.Medico.Medico;
 import com.vitor.estudo.api.Domain.Medico.Repository.MedicoRepository;
@@ -43,7 +44,7 @@ public class AgendaDeConsultas {
         Paciente paciente = pacienteRepository.getReferenceById(dados.idPaciente());
         // Paciente paciente2 = pacienteRepository.findById(dados.idPaciente()).get();
         
-        Consulta consulta = new Consulta(null, medico, paciente, dados.dataConsulta());
+        Consulta consulta = new Consulta(null, medico, paciente, dados.dataConsulta(),null);
         consultaRepository.save(consulta);
 
     
@@ -60,6 +61,19 @@ public class AgendaDeConsultas {
         }
 
         return medicoRepository.esccolherMedicoAleatorioLivreNaData(dados.especialidade(), dados.dataConsulta());
+    }
+
+
+    public void cancelar(DadosCancelamentoConsulta dados){
+        Consulta consultaCancelar = null;
+        if(consultaRepository.existsById(dados.idConsulta())){
+            consultaCancelar = consultaRepository.getReferenceById(dados.idConsulta());
+        }
+        else{
+            throw new ValidacaoExecption("ID NAO EXISTE OU ID INVALIDO!"); 
+        }
+
+        consultaCancelar.cancelar(dados.motivoCancelamento());
     }
 
 }
