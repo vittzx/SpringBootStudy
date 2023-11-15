@@ -32,5 +32,12 @@ public interface MedicoRepository extends JpaRepository<Medico, Long> {
             """)
     // :nomeDoArgumento = argumento
     Medico esccolherMedicoAleatorioLivreNaData(Especialidade especialidade, LocalDateTime dataConsulta);
+
+    @Query("""
+        select m.ativo from Medico m
+        where m.id = :id
+
+    """)
+    Boolean findAtivoById(Long idMedico); // aqui nao carrega a Entidade Medico e sim retorna true ou false.
     
 }

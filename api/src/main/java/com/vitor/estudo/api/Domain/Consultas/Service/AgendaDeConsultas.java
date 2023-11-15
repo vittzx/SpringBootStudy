@@ -40,6 +40,9 @@ public class AgendaDeConsultas {
             throw new ValidacaoExecption("Id do medico inexistente!");
         }
 
+        // validacoes da regra de negocio vao ser criadas em outra classe | https://trello.com/c/BmaWcJot/9-agendamento-de-consultas
+
+
         Medico medico = escolherMedico(dados);
         Paciente paciente = pacienteRepository.getReferenceById(dados.idPaciente());
         // Paciente paciente2 = pacienteRepository.findById(dados.idPaciente()).get();
