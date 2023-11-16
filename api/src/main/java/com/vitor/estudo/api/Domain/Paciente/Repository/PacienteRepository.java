@@ -9,5 +9,7 @@ import com.vitor.estudo.api.Domain.Paciente.Paciente;
 public interface PacienteRepository extends JpaRepository<Paciente,Long>{
 
     Page<Paciente> findAllByAtivoTrue(Pageable paginacao);
+
+    boolean findAtivoById(Long idPaciente);
     
 }

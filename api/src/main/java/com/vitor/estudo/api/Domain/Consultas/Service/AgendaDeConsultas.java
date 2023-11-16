@@ -1,5 +1,7 @@
 package com.vitor.estudo.api.Domain.Consultas.Service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -7,6 +9,7 @@ import com.vitor.estudo.api.Domain.Consultas.Consulta;
 import com.vitor.estudo.api.Domain.Consultas.DTO.DadosAgendamentoConsulta;
 import com.vitor.estudo.api.Domain.Consultas.DTO.DadosCancelamentoConsulta;
 import com.vitor.estudo.api.Domain.Consultas.Repository.ConsultasRepository;
+import com.vitor.estudo.api.Domain.Consultas.Validacoes.ValidadorAgendamentoConsulta;
 import com.vitor.estudo.api.Domain.Medico.Medico;
 import com.vitor.estudo.api.Domain.Medico.Repository.MedicoRepository;
 import com.vitor.estudo.api.Domain.Paciente.Paciente;
@@ -27,6 +30,9 @@ public class AgendaDeConsultas {
     private ConsultasRepository consultaRepository;
 
 
+    @Autowired
+    private List<ValidadorAgendamentoConsulta> validadores;
+
     public void agendar(DadosAgendamentoConsulta dados){
 
         if(!pacienteRepository.existsById(dados.idPaciente()))
@@ -41,7 +47,7 @@ public class AgendaDeConsultas {
         }
 
         // validacoes da regra de negocio vao ser criadas em outra classe | https://trello.com/c/BmaWcJot/9-agendamento-de-consultas
-
+        validadores.forEach(v -> v.validar(dados));
 
         Medico medico = escolherMedico(dados);
         Paciente paciente = pacienteRepository.getReferenceById(dados.idPaciente());

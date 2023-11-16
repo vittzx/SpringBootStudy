@@ -1,16 +1,19 @@
 package com.vitor.estudo.api.Domain.Consultas.Validacoes;
 
 import java.time.DayOfWeek;
-import java.time.LocalDateTime;
 
+import org.springframework.stereotype.Component;
+
+import com.vitor.estudo.api.Domain.Consultas.DTO.DadosAgendamentoConsulta;
 import com.vitor.estudo.api.Domain.Consultas.Service.ValidacaoExecption;
 
-public class ValidacaoHorarioFuncionamentoClinica {
+@Component
+public class ValidacaoHorarioFuncionamentoClinica implements ValidadorAgendamentoConsulta {
     
-    public void validar(LocalDateTime dataConsulta){
-        boolean domingo = dataConsulta.getDayOfWeek().equals(DayOfWeek.SUNDAY);
-        boolean aberturaClinica = dataConsulta.getHour() < 7;
-        boolean fechamentoClinica = dataConsulta.getHour() > 18; // fecha as 19, porem como eh uma hora de consulta nao se pode marcar as 19, pois eh o fechamento da clinica.
+    public void validar(DadosAgendamentoConsulta dados){
+        boolean domingo = dados.dataConsulta().getDayOfWeek().equals(DayOfWeek.SUNDAY);
+        boolean aberturaClinica = dados.dataConsulta().getHour() < 7;
+        boolean fechamentoClinica = dados.dataConsulta().getHour() > 18; // fecha as 19, porem como eh uma hora de consulta nao se pode marcar as 19, pois eh o fechamento da clinica.
         if(domingo || aberturaClinica || fechamentoClinica) throw new ValidacaoExecption("Consulta fora de horario");
     }
 

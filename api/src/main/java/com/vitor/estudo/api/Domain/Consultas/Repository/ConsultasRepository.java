@@ -9,5 +9,8 @@ import com.vitor.estudo.api.Domain.Consultas.Consulta;
 public interface ConsultasRepository extends JpaRepository<Consulta,Long> {
 
     Boolean existsByMedicoIdAndData(Long idMedico, LocalDateTime dataConsulta);
+
+    Boolean existsByPacienteIdAndDataBetween(Long idPaciente, LocalDateTime primeiroHorario,
+            LocalDateTime ultimoHorario);
     
 }
