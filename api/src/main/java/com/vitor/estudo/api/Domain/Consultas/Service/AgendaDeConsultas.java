@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.vitor.estudo.api.Domain.Consultas.Consulta;
 import com.vitor.estudo.api.Domain.Consultas.DTO.DadosAgendamentoConsulta;
 import com.vitor.estudo.api.Domain.Consultas.DTO.DadosCancelamentoConsulta;
+import com.vitor.estudo.api.Domain.Consultas.DTO.DadosDetalhamentoConsulta;
 import com.vitor.estudo.api.Domain.Consultas.Repository.ConsultasRepository;
 import com.vitor.estudo.api.Domain.Consultas.Validacoes.ValidadorAgendamentoConsulta;
 import com.vitor.estudo.api.Domain.Medico.Medico;
@@ -33,7 +34,7 @@ public class AgendaDeConsultas {
     @Autowired
     private List<ValidadorAgendamentoConsulta> validadores;
 
-    public void agendar(DadosAgendamentoConsulta dados){
+    public DadosDetalhamentoConsulta agendar(DadosAgendamentoConsulta dados){
 
         if(!pacienteRepository.existsById(dados.idPaciente()))
         {
@@ -50,13 +51,16 @@ public class AgendaDeConsultas {
         validadores.forEach(v -> v.validar(dados));
 
         Medico medico = escolherMedico(dados);
+        if(medico == null){
+            throw new ValidacaoExecption("Nao ha medico disponivel nessa data.");
+        }
         Paciente paciente = pacienteRepository.getReferenceById(dados.idPaciente());
         // Paciente paciente2 = pacienteRepository.findById(dados.idPaciente()).get();
         
         Consulta consulta = new Consulta(null, medico, paciente, dados.dataConsulta(),null);
         consultaRepository.save(consulta);
 
-    
+        return new DadosDetalhamentoConsulta(consulta);
     }
 
 
@@ -79,8 +83,8 @@ public class AgendaDeConsultas {
             consultaCancelar = consultaRepository.getReferenceById(dados.idConsulta());
         }
         else{
-            throw new ValidacaoExecption("ID NAO EXISTE OU ID INVALIDO!"); 
-        }
+            throw new ValidacaoExecption("ID da consulta nao existe, ou esta invaldo"); 
+        }   
 
         consultaCancelar.cancelar(dados.motivoCancelamento());
     }

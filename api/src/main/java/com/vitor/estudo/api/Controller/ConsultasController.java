@@ -36,9 +36,9 @@ public class ConsultasController {
          * Mas é importante ficarmos atentos, pois muitas vezes não é necessário criar um Service e, consequentemente, adicionar mais uma camada e complexidade desnecessária à nossa  aplicação. Uma regra que podemos utilizar é a seguinte: se não houverem regras de negócio, podemos simplesmente realizar a comunicação direta entre os controllers e os repositories da aplicação.
          * 
          */
-        agenda.agendar(dados);
+        DadosDetalhamentoConsulta dadosDetalhamentoConsulta = agenda.agendar(dados);
 
-        return ResponseEntity.ok(new DadosDetalhamentoConsulta(null,null, null ,null));
+        return ResponseEntity.ok(dadosDetalhamentoConsulta);
         
     }
 
