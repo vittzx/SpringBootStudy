@@ -13,12 +13,13 @@ import com.vitor.estudo.api.Domain.Consultas.DTO.DadosCancelamentoConsulta;
 import com.vitor.estudo.api.Domain.Consultas.DTO.DadosDetalhamentoConsulta;
 import com.vitor.estudo.api.Domain.Consultas.Service.AgendaDeConsultas;
 
-
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/consultas")
+@SecurityRequirement(name = "bearer-key")
 public class ConsultasController {
     
 

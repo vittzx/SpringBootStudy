@@ -26,11 +26,13 @@ import com.vitor.estudo.api.Domain.Medico.DTO.DadosDetalhamentoMedico;
 import com.vitor.estudo.api.Domain.Medico.DTO.DadosListagemMedico;
 import com.vitor.estudo.api.Domain.Medico.Repository.MedicoRepository;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 
 
 @RestController
 @RequestMapping("medicos")
+@SecurityRequirement(name = "bearer-key")
 public class MedicoController{
 
     @Autowired // injecao de depencias == autowired

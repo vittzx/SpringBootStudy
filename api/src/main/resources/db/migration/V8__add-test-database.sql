@@ -1,0 +1,1 @@
+CREATE DATABASE estudos_test_spring;
